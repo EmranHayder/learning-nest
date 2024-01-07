@@ -1,31 +1,33 @@
 import { Injectable } from "@nestjs/common";
-import { Book } from "./dto/book.dto";
+import { BookDto } from "./dto/book.dto";
 
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class BookService {
-    public books: Book[] = [];
+    public books: BookDto[] = [];
 
     //Add Books
-    addBook(book: Book): string {
+    addBook(book: BookDto): string {
         book.id = uuidv4();
+        book.id = book.id.toString();
         this.books.push(book);
         return 'Book added successfully';
     }
 
     //Find All Books
-    findAllBooks(): Book[] {
+    findAllBooks(): BookDto[] {
         return this.books;
     }
 
     //Find Book By Id
-    findBookById(id: string): Book {
+    findBookById(id: string): BookDto {
+        console.log(typeof id);
         return this.books.find(book => book.id === id);
     }
 
     //Update Book
-    updateBook(book: Book): string {
+    updateBook(book: BookDto): string {
         const index = this.books.findIndex(book => book.id === book.id)
         this.books[index] = book;
         return 'Book updated successfully';
